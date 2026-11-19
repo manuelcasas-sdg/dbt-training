@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: orders_pivot
+    description: "Daily aggregated order metrics pivoted by order status (F, P, O) with total order price."
+    columns:
+      - name: orderdate
+        description: "The order date acting as the grain of this mart."
+      - name: total_price
+        description: "Sum of total order price for the date."
+        tests:
+          - dbt_utils.expression_is_true:
+              name: orders_pivot_total_price_not_zero
+              arguments:
+                expression: "!= 0"
+              config:
+                severity: warn

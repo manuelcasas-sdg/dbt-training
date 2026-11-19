@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: nation_supplier_summary
+    description: "Supplier and parts metrics aggregated by nation and region."
+    columns:
+      - name: nation_name
+        description: "Name of the nation."
+      - name: region_name
+        description: "Name of the region containing the nation."
+      - name: supplier_count
+        description: "Number of suppliers in the nation and region."
+      - name: total_available_quantity
+        description: "Total available quantity of parts supplied in the nation and region."
+      - name: total_supply_cost
+        description: "Total supply cost for the nation and region."
+      - name: total_part_offerings
+        description: "Total number of distinct part offerings associated with suppliers in the nation and region."
