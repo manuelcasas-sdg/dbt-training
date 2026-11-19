@@ -32,7 +32,7 @@ As configured in `dbt_project.yml`:
 
 | Layer | Materialization | Location | Primary Purpose | Rules |
 | :--- | :--- | :--- | :--- | :--- |
-| **Staging** | `view` | `models/staging/` | Cleanse and cast raw sources | 1:1 with source table, rename to snake_case, cast datatypes. No joins or business aggregations. |
+| **Staging** | `table` (or `incremental`) | `models/staging/` | Cleanse, cast, and persist raw extractions | 1:1 with source table, rename to snake_case, cast datatypes. Materialized as tables (full load) with at least one entity configured as incremental. |
 | **Intermediate** | `ephemeral` | `models/intermediate/` | Reusable cross-model transformations | Multi-model joins, complex business rules, prep for multiple marts. |
 | **Marts** | `table` | `models/marts/` | Business entities & reporting | Dimensional modeling (facts & dims), aggregations, consumer-ready datasets. |
 
@@ -54,11 +54,19 @@ As configured in `dbt_project.yml`:
 
 ## Verification & Tooling Workflow
 
+> [!IMPORTANT]
+> Always execute dbt commands inside the **`dbt-snowflake`** Conda environment:
+> ```powershell
+> conda activate dbt-snowflake
+> # OR run directly via conda run:
+> conda run -n dbt-snowflake dbt <command>
+> ```
+
 Before completing model changes, follow this verification flow:
 
 ```powershell
 # 1. Compile model and check compiled SQL output
-dbt compile -s <model_name>
+conda run -n dbt-snowflake dbt compile -s <model_name>
 
 # 2. Run SQLFluff linter
 sqlfluff lint models/.../<model_name>.sql
@@ -67,5 +75,5 @@ sqlfluff lint models/.../<model_name>.sql
 sqlfluff fix models/.../<model_name>.sql
 
 # 4. Build and test model in dev
-dbt build -s <model_name>
+conda run -n dbt-snowflake dbt build -s <model_name>
 ```

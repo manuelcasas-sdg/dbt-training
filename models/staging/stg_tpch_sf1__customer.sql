@@ -1,14 +1,23 @@
-WITH preview as (
-    SELECT 
-    C_CUSTKEY::BIGINT AS C_CUSTKEY,
-    C_NAME::VARCHAR AS C_NAME,
-    C_ADDRESS::VARCHAR AS C_ADDRESS,
-    C_NATIONKEY::BIGINT AS C_NATIONKEY,
-    C_PHONE::VARCHAR AS C_PHONE,
-    C_ACCTBAL::FLOAT AS C_ACCTBAL,
-    C_MKTSEGMENT::VARCHAR AS C_MKTSEGMENT,
-    C_COMMENT::VARCHAR AS C_COMMENT
-from {{ source('tpch_sf1', 'customer') }}
+with source as (
+
+    select * from {{ source('tpch_sf1', 'customer') }}
+
+),
+
+renamed as (
+
+    select
+        c_custkey as custkey,
+        c_name as name,
+        c_address as address,
+        c_nationkey as nationkey,
+        c_phone as phone,
+        c_acctbal as acctbal,
+        c_mktsegment as mktsegment,
+        c_comment as comment
+
+    from source
+
 )
 
-SELECT * FROM preview
+select * from renamed

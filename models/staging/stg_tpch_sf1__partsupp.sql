@@ -7,11 +7,11 @@ with source as (
 renamed as (
 
     select
-        ps_partkey,
-        ps_suppkey,
-        ps_availqty,
-        ps_supplycost,
-        ps_comment
+        ps_partkey as partkey,
+        ps_suppkey as suppkey,
+        ps_availqty as availqty,
+        ps_supplycost as supplycost,
+        ps_comment as comment
 
     from source
 
