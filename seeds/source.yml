@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: seeds
+    database: "{{ target.database }}"
+    schema: seeds
+    tables:
+      - name: country_phone_codes
+        description: "Seed mapping of country names to phone dialing codes."
+        columns:
+          - name: country
+            description: "Country name"
+          - name: phone_code
+            description: "International phone dialing code prefix"
