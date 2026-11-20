@@ -4,7 +4,7 @@ with source as (
 
 ),
 
-renamed as (
+calculated as (
 
     select
         l_orderkey as orderkey,
@@ -13,6 +13,8 @@ renamed as (
         l_linenumber as linenumber,
         l_quantity as quantity,
         l_extendedprice as extendedprice,
+        ROUND(l_extendedprice * (1- l_discount),2) AS discounted,
+        ROUND(l_extendedprice * (1-l_discount) * (1-l_tax),2) as taxed,
         l_discount as discount,
         l_tax as tax,
         l_returnflag as returnflag,
@@ -28,4 +30,4 @@ renamed as (
 
 )
 
-select * from renamed
+select * from calculated

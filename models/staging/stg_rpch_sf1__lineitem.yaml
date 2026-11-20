@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_tpch_sf1__lineitem
+    description: "Staging model for the lineitem table."
+    columns:
+      - name: orderkey
+        description: "Foreign key to the order."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_tpch_sf1__orders')
+                field: orderkey
+      - name: partkey
+        description: "Foreign key to the part."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_tpch_sf1__part')
+                field: partkey
+      - name: suppkey
+        description: "Foreign key to the supplier."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_tpch_sf1__supplier')
+                field: suppkey
+      - name: linenumber
+        description: "Line number within the order."
+        tests:
+          - not_null
